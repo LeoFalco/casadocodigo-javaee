@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class GenericDao<E, I extends Serializable> {
 
     @PersistenceContext
-    private EntityManager em;
+    protected EntityManager em;
 
     private Class<E> entityClass;
 
