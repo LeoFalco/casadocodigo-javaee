@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class GenericDao<E, I extends Serializable> {
 
     @PersistenceContext
-    private EntityManager em;
+    protected EntityManager em;
 
     private Class<E> entityClass;
 
@@ -37,9 +37,6 @@ public abstract class GenericDao<E, I extends Serializable> {
     }
 
     public E atualizar(E e) {
-
-        GsonUtil.toJson(e);
-        System.out.println("merge");
         e = this.em.merge(e);
         return e;
     }
