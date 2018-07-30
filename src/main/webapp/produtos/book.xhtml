@@ -3,7 +3,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:body>
-    <h:form >
+    <h:form>
         <div>
             <h:outputLabel>Titulo</h:outputLabel>
             <h:inputText value="#{bookBean.book.titulo}"/>
@@ -15,7 +15,8 @@
 
         <div>
             <h:outputLabel>Autores</h:outputLabel>
-            <h:selectManyListbox value="#{bookBean.autoresSelecionados}">
+            <h:selectManyListbox value="#{bookBean.idAutoresSelecionados}"
+                                 converter="javax.faces.Integer">
                 <f:selectItems value="#{bookBean.autores}"
                                var="author"
                                itemLabel="#{author.name}" itemValue="#{author.id}"/>

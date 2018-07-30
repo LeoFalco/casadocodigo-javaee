@@ -2,6 +2,7 @@ package br.com.sifat.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +14,15 @@ public class Book {
     private Integer numPaginas;
     private BigDecimal preco;
     private List<Autor> autores;
+
+    public Book() {
+        this.id = 0L;
+        this.titulo = "";
+        this.descricao = "";
+        this.numPaginas = 0;
+        this.preco = BigDecimal.ZERO;
+        this.autores = new ArrayList<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +50,7 @@ public class Book {
         this.descricao = descricao;
     }
 
-    @Column(columnDefinition = "decimal(10,2)")
+    @Column(name = "num_paginas")
     public Integer getNumPaginas() {
         return numPaginas;
     }
@@ -49,6 +59,7 @@ public class Book {
         this.numPaginas = numPaginas;
     }
 
+    @Column(columnDefinition = "decimal(10,2)")
     public BigDecimal getPreco() {
         return preco;
     }

@@ -1,4 +1,4 @@
-package br.com.sifat.mb;
+package br.com.sifat.bean;
 
 import br.com.sifat.GsonUtil;
 import br.com.sifat.dao.AutorDao;
@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -27,10 +28,29 @@ public class BookBean implements Serializable {
     @Inject
     private AutorDao autorDao;
 
-    private Book book = new Book();
-    private List<Autor> autoresSelecionados = new ArrayList<>();
     private List<Autor> autores;
+    private List<Integer> idAutoresSelecionados;
+    private Book book;
 
+    @PostConstruct
+    private void init() {
+        autores = autorDao.listar();
+        idAutoresSelecionados = new ArrayList<>();
+        book = new Book();
+    }
+
+    public void save() {
+        preparaBook();
+        book = bookDao.atualizar(book);
+    }
+
+    private void preparaBook() {
+        List<Autor> collect = autores.stream()
+                .filter(autor -> idAutoresSelecionados.contains(autor.getId()))
+                .collect(Collectors.toList());
+
+        this.book.setAutores(collect);
+    }
 
     public Book getBook() {
         return book;
@@ -40,36 +60,19 @@ public class BookBean implements Serializable {
         this.book = book;
     }
 
-    @PostConstruct
-    private void init() {
-        autores = autorDao.listar();
-        this.book = bookDao.find(1L);
-    }
-
-
-    public void save() {
-        System.out.println("Chegou aqui: " + book.getTitulo());
-        //this.book.setAutores(this.getAutoresSelecionados());
-        System.out.println(GsonUtil.toJson(book));
-        //this.book = this.bookDao.atualizar(book);
-
-    }
-
-    public List<Autor> getAutoresSelecionados() {
-        return autoresSelecionados;
+    public List<Integer> getIdAutoresSelecionados() {
+        return idAutoresSelecionados;
     }
 
     public List<Autor> getAutores() {
         return autores;
     }
 
-    public void setAutoresSelecionados(List<Autor> autoresSelecionados) {
-        this.autoresSelecionados = autoresSelecionados;
+    public void setIdAutoresSelecionados(List<Integer> idAutoresSelecionados) {
+        this.idAutoresSelecionados = idAutoresSelecionados;
     }
 
     public void setAutores(List<Autor> autores) {
         this.autores = autores;
     }
-
-
 }

@@ -1,5 +1,3 @@
-
- 
 set user=root
 set password=""
 set backupDir="C:\bkpmysql"
