@@ -18,4 +18,13 @@ public class BookDao extends GenericDao<Book, Long> {
         TypedQuery<Book> query = em.createQuery("select distinct b from Book b join fetch b.autores", Book.class);
         return query.getResultList();
     }
+
+    public List<Book> listar(boolean fetchAutor){
+        if(fetchAutor){
+            return this.listar();
+        }else{
+            // from autor
+            return super.listar();
+        }
+    }
 }
