@@ -1,47 +1,49 @@
 <html xmlns:h="http://java.sun.com/jsf/html"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:body>
-
-    <h:messages/>
     <h:form prependId="false">
         <div>
             <h:outputLabel>Titulo</h:outputLabel>
-            <h:inputText id="titulo" value="#{bookBean.book.titulo}" required="true"
-            requiredMessage="Campo obrigatório"/>
+            <h:inputText id="titulo" value="#{bookBean.book.titulo}"/>
             <h:message for="titulo"/>
         </div>
         <div>
             <h:outputLabel>Descrição</h:outputLabel>
-            <h:inputTextarea id="descricao" cols="20" rows="10" value="#{bookBean.book.descricao}" required="true"
-                             requiredMessage="Campo obrigatório"/>
+            <h:inputTextarea id="descricao" cols="20" rows="10" value="#{bookBean.book.descricao}"/>
             <h:message for="descricao"/>
-
         </div>
         <div>
             <h:outputLabel>Autores</h:outputLabel>
-            <h:selectManyListbox value="#{bookBean.idAutoresSelecionados}" required="true"
-                                 id="autores"
-                                 converter="javax.faces.Integer">
+            <h:selectManyListbox value="#{bookBean.idAutoresSelecionados}"
+                                 id="autores">
                 <f:selectItems value="#{bookBean.autores}"
                                var="author"
-                               itemLabel="#{author.name}" itemValue="#{author.id}"/>
+                               itemLabel="#{author.name}" itemValue="#{author}"/>
             </h:selectManyListbox>
         </div>
         <div>
             <h:outputLabel>Número de páginas</h:outputLabel>
-            <h:inputText id="num-paginas" value="#{bookBean.book.numPaginas}" required="true"
-                         requiredMessage="Campo obrigatório"/>
+            <h:inputText id="num-paginas" value="#{bookBean.book.numPaginas}"
+                         converter="javax.faces.Integer" pt:type="number"/>
             <h:message for="num-paginas"/>
         </div>
         <div>
             <h:outputLabel>Preço</h:outputLabel>
-            <h:inputText id="preco" value="#{bookBean.book.preco}" required="true"
-                         requiredMessage="Campo obrigatório"/>
+            <h:inputText id="preco" value="#{bookBean.book.preco}" pt:type="number"/>
             <h:message for="preco"/>
         </div>
-        <h:commandButton value="Gravar" ajax="true" process="@form" update="data-table"
+        <div>
+            <h:outputLabel for="data-lancamento">Data de Lançamento</h:outputLabel>
+            <h:inputText id="data-lancamento" value="#{bookBean.book.dataLancamento}" pt:type="date">
+                <f:convertDateTime pattern="dddd-MM-yy"/>
+            </h:inputText>
+            <h:message for="preco"/>
+        </div>
+
+        <h:commandButton value="Gravar 2" ajax="true" process="@form" update="data-table"
                          actionListener="#{bookBean.save}"/>
         <p:dataTable var="book" id="data-table" value="#{bookBean.books}">
             <p:column headerText="Id">
@@ -56,8 +58,11 @@
             <p:column headerText="Numero de Páginas">
                 <h:outputText value="#{book.numPaginas}"/>
             </p:column>
-            <p:column headerText="Cor">
+            <p:column headerText="Preço">
                 <h:outputText value="#{book.preco}"/>
+            </p:column>
+            <p:column headerText="Lançamento">
+                <h:outputText value="#{book.dataLancamento}"/>
             </p:column>
         </p:dataTable>
     </h:form>

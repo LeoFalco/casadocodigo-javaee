@@ -1,8 +1,10 @@
 package br.com.sifat.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -13,6 +15,7 @@ public class Book {
     private String descricao;
     private Integer numPaginas;
     private BigDecimal preco;
+    private Calendar dataLancamento;
     private List<Autor> autores;
 
     public Book() {
@@ -34,6 +37,8 @@ public class Book {
         this.id = id;
     }
 
+    @Column(nullable = false, columnDefinition = "varchar(100)", length = 100)
+    //@NotBlank
     public String getTitulo() {
         return titulo;
     }
@@ -42,6 +47,8 @@ public class Book {
         this.titulo = titulo;
     }
 
+    @Column(nullable = false, columnDefinition = "varchar(250)", length = 250)
+    //@NotBlank
     public String getDescricao() {
         return descricao;
     }
@@ -50,7 +57,9 @@ public class Book {
         this.descricao = descricao;
     }
 
-    @Column(name = "num_paginas")
+    @Column(name = "num_paginas", nullable = false)
+    @NotNull
+    @Min(1)
     public Integer getNumPaginas() {
         return numPaginas;
     }
@@ -59,7 +68,9 @@ public class Book {
         this.numPaginas = numPaginas;
     }
 
-    @Column(columnDefinition = "decimal(10,2)")
+    @Column(columnDefinition = "decimal(10,2)", nullable = false)
+    @NotNull
+    @DecimalMin("0")
     public BigDecimal getPreco() {
         return preco;
     }
@@ -68,7 +79,20 @@ public class Book {
         this.preco = preco;
     }
 
+    @Column(name = "data_lancamento", nullable = false, columnDefinition = "date")
+    @Future
+    public Calendar getDataLancamento() {
+        return dataLancamento;
+    }
+
+    public Book setDataLancamento(Calendar dataLancamento) {
+        this.dataLancamento = dataLancamento;
+        return this;
+    }
+
     @ManyToMany(targetEntity = Autor.class, fetch = FetchType.EAGER)
+    @Column(nullable = false)
+    //@NotBlank
     public List<Autor> getAutores() {
         return autores;
     }
