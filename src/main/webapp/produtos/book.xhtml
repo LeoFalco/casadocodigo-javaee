@@ -6,12 +6,14 @@
 <h:body>
     <h:form prependId="false">
         <div>
+
             <h:outputLabel for="titulo">Titulo</h:outputLabel>
             <h:inputText id="titulo" value="#{bookBean.book.titulo}" pt:type="text"/>
             <h:message for="titulo"/>
         </div>
         <div>
             <h:outputLabel>Descrição</h:outputLabel>
+
             <h:inputTextarea id="descricao"
                              cols="20"
                              rows="10"
