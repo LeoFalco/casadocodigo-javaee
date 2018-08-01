@@ -1,22 +1,17 @@
 package br.com.sifat.converter;
 
-import br.com.sifat.GsonUtil;
 import br.com.sifat.StringUtil;
 import br.com.sifat.dao.AutorDao;
 import br.com.sifat.model.Autor;
-
-import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@RequestScoped
-@FacesConverter(forClass = Autor.class)
+@Named
 public class AutorConverter implements Converter {
 
     Logger logger = Logger.getLogger(AutorConverter.class.getName());
@@ -33,15 +28,12 @@ public class AutorConverter implements Converter {
         try {
             id = Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            logger.log(Level.INFO, e.getMessage());
+            logger.log(Level.WARNING, e.getMessage());
             return null;
         }
 
-        System.out.println(s);
-        System.out.println(autorDao);
-        Autor autor = autorDao.find(id);
-        GsonUtil.toJson(autor);
-        return autor;
+        // pode retornar nulo
+        return autorDao.find(id);
     }
 
     @Override

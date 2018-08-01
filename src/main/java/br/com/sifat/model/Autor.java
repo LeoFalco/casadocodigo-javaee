@@ -53,4 +53,13 @@ public class Autor {
     public int hashCode() {
         return Objects.hash(id, nome, books);
     }
+
+    @Override
+    public String toString() {
+        return "Autor{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", books=" + books +
+                '}';
+    }
 }

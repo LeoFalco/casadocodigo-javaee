@@ -4,20 +4,20 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.DateTimeConverter;
-import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@FacesConverter(forClass = Calendar.class)
+@Named
+// classe de converter para calendar aproveitando as funcionalidades do DateTimeConverter
 public class CalendarConverter implements Converter {
 
     private static DateTimeConverter dateTimeConverter = new DateTimeConverter();
     private static Logger logger = Logger.getLogger(CalendarConverter.class.getName());
 
     static {
-        dateTimeConverter.setPattern("dd-MM-yyy");
+        dateTimeConverter.setPattern("dd-MM-yyyy");
     }
 
     @Override
@@ -28,8 +28,6 @@ public class CalendarConverter implements Converter {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-
-        logger.log(Level.INFO, "Recuperando objeto " + calendar);
         return calendar;
     }
 
@@ -40,8 +38,6 @@ public class CalendarConverter implements Converter {
 
         Calendar calendar = (Calendar) value;
 
-        String asString = dateTimeConverter.getAsString(context, component, calendar.getTime());
-        logger.log(Level.INFO, "Serializando objeto " + asString);
-        return asString;
+        return dateTimeConverter.getAsString(context, component, calendar.getTime());
     }
 }

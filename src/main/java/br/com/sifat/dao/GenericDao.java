@@ -1,7 +1,5 @@
 package br.com.sifat.dao;
 
-import br.com.sifat.GsonUtil;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;

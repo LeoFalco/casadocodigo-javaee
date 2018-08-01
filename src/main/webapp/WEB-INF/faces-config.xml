@@ -7,6 +7,8 @@
         <!-- mensagem de validação personalizada-->
         <message-bundle>jsf_messages</message-bundle>
     </application>
+
+    <!--
     <converter>
         <description>Configurando converter de Calendar</description>
         <converter-id>calendarConverter</converter-id>
@@ -17,4 +19,5 @@
         <converter-id>autorConverter</converter-id>
         <converter-class>br.com.sifat.converter.AutorConverter</converter-class>
     </converter>
+    -->
 </faces-config>

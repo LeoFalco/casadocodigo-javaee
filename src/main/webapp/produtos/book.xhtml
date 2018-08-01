@@ -1,65 +1,81 @@
-<html xmlns:h="http://java.sun.com/jsf/html"
-      xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+</h:head>
 <h:body>
     <h:form prependId="false">
-        <div>
+        <p:panelGrid columns="2">
+            <p:outputLabel for="titulo">Titulo</p:outputLabel>
+            <p:panelGrid>
+                <p:inputText id="titulo"
+                             value="#{bookBean.book.titulo}"
+                             pt:type="text"/>
+                <p:message for="titulo"/>
+            </p:panelGrid>
 
-            <h:outputLabel for="titulo">Titulo</h:outputLabel>
-            <h:inputText id="titulo" value="#{bookBean.book.titulo}" pt:type="text"/>
-            <h:message for="titulo asdasd"/>
-        </div>
-        <div>
-            <h:outputLabel>Descrição</h:outputLabel>
+            <p:outputLabel>Descrição</p:outputLabel>
+            <p:panelGrid>
+                <p:inputTextarea id="descricao"
+                                 cols="20"
+                                 rows="10"
+                                 pt:type="textarea"
+                                 value="#{bookBean.book.descricao}"/>
+                <p:message for="descricao"/>
+            </p:panelGrid>
 
-            <h:inputTextarea id="descricao"
-                             cols="20"
-                             rows="10"
-                             pt:type="textarea"
-                             value="#{bookBean.book.descricao}"/>
-            <h:message for="descricao"/>
-        </div>
-        <div>
-            <h:outputLabel>Autores</h:outputLabel>
-            <h:selectManyListbox value="#{bookBean.book.autores}"
-                                 id="autores"
-                                 converter="autorConverter">
-                <f:selectItems value="#{bookBean.autores}"
-                               var="author"
-                               itemLabel="#{author.nome}"
-                               itemValue="#{author}"/>
-            </h:selectManyListbox>
-        </div>
-        <div>
-            <h:outputLabel>Número de páginas</h:outputLabel>
-            <h:inputText id="num-paginas"
-                         value="#{bookBean.book.numPaginas}"
-                         converter="javax.faces.Integer"
-                         pt:type="number"/>
-            <h:message for="num-paginas"/>
-        </div>
-        <div>
-            <h:outputLabel>Preço</h:outputLabel>
-            <h:inputText id="preco" value="#{bookBean.book.preco}" pt:type="number"/>
-            <h:message for="preco"/>
-        </div>
-        <!--
-        <div>
-            <h:outputLabel for="data-lancamento">Data de Lançamento</h:outputLabel>
-            <h:inputText id="data-lancamento"
-                         value="#{bookBean.book.dataLancamento}"
-                         converter="calendarConverter">
-            </h:inputText>
-            <h:message for="preco"/>
-        </div>
-        -->
-        <h:commandButton value="Gravar 2" ajax="true"
-                         process="@form"
-                         update="data-table"
-                         actionListener="#{bookBean.save}"/>
-        <p:dataTable var="book" id="data-table" value="#{bookBean.books}">
+            <p:outputLabel for="autores" value="Autores"/>
+            <p:panelGrid>
+                <p:selectManyMenu id="autores"
+                                  value="#{bookBean.book.autores}"
+                                  converter="#{autorConverter}"
+                                  filter="true" filterMatchMode="contains" showCheckbox="true">
+                    <f:selectItems value="#{bookBean.autores}" var="author"
+                                   itemLabel="#{author.nome}"
+                                   itemValue="#{author}"/>
+                </p:selectManyMenu>
+                <p:message for="autores"/>
+            </p:panelGrid>
+
+            <p:outputLabel value="Número de páginas"/>
+            <p:panelGrid>
+                <p:inputText id="num-paginas"
+                             value="#{bookBean.book.numPaginas}"
+                             converter="javax.faces.Integer"
+                             pt:type="number"/>
+                <p:message for="num-paginas"/>
+            </p:panelGrid>
+
+            <p:outputLabel value="Preço"/>
+            <p:panelGrid>
+                <p:inputText id="preco" value="#{bookBean.book.preco}" pt:type="number"/>
+                <p:message for="preco"/>
+            </p:panelGrid>
+
+            <p:outputLabel for="data-lancamento" value="Data de Lançamento"/>
+            <p:panelGrid>
+                <p:calendar id="data-lancamento"
+                            pattern="dd/MM/yyyy"
+                            mask="true"
+                            value="#{bookBean.book.dataLancamento}"
+                            converter="#{calendarConverter}"/>
+                <p:message for="data-lancamento"/>
+            </p:panelGrid>
+
+
+            <p:commandButton value="Gravar" ajax="true" styleClass="btn-primary"
+                             process="@form"
+                             update="data-table"
+                             actionListener="#{bookBean.save}"/>
+
+            <p:commandButton value="Teste" process="@this" ajax="true" actionListener="#{bookBean.teste}"
+                             styleClass="btn-danger"/>
+
+        </p:panelGrid>
+
+        <p:dataTable var="book" id="data-table" value="#{bookBean.books}" styleClass="ui-sm-10 ui-md-10 ui-g-10">
             <p:column headerText="Id">
                 <h:outputText value="#{book.id}"/>
             </p:column>
@@ -76,7 +92,8 @@
                 <h:outputText value="#{book.preco}"/>
             </p:column>
             <p:column headerText="Lançamento">
-                <h:outputText value="#{book.dataLancamento}"/>
+                <h:outputText value="#{book.dataLancamento}"
+                              converter="#{calendarConverter}"/>
             </p:column>
         </p:dataTable>
     </h:form>

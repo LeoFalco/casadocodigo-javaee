@@ -1,12 +1,12 @@
 package br.com.sifat.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "book")
@@ -27,10 +27,7 @@ public class Book {
         this.numPaginas = 0;
         this.preco = BigDecimal.ZERO;
         this.autores = new ArrayList<>();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2019, Calendar.APRIL, 8);
-        this.dataLancamento = calendar;
+        this.dataLancamento = Calendar.getInstance();
     }
 
     @Id
@@ -86,14 +83,13 @@ public class Book {
     }
 
     @Column(name = "data_lancamento", nullable = false, columnDefinition = "date")
-    @Future
+    @Future(message = "o valor deve ser uma data Futura")
     public Calendar getDataLancamento() {
         return dataLancamento;
     }
 
-    public Book setDataLancamento(Calendar dataLancamento) {
+    public void setDataLancamento(Calendar dataLancamento) {
         this.dataLancamento = dataLancamento;
-        return this;
     }
 
     @ManyToMany(targetEntity = Autor.class, fetch = FetchType.EAGER)

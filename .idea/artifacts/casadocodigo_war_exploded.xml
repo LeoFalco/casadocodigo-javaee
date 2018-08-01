@@ -15,6 +15,7 @@
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.2" />
           <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.2" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:2.0.0.Final" />
+          <element id="library" level="project" name="Maven: com.github.adminfaces:admin-theme:1.0.0-RC15" />
         </element>
       </element>
       <element id="directory" name="META-INF">

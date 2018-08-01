@@ -1,6 +1,5 @@
 package br.com.sifat.bean;
 
-import br.com.sifat.GsonUtil;
 import br.com.sifat.dao.AutorDao;
 import br.com.sifat.dao.BookDao;
 import br.com.sifat.model.Autor;
@@ -12,14 +11,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.swing.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -36,6 +35,8 @@ public class BookBean implements Serializable {
     private MessageService messageService;
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
+
+    private Calendar data = Calendar.getInstance();
 
     private List<Autor> autores;
     private List<Integer> idAutoresSelecionados;
@@ -55,9 +56,7 @@ public class BookBean implements Serializable {
     }
 
     public void save() {
-        System.out.println("lupalinda");
         book = bookDao.atualizar(book);
-        logger.log(Level.INFO, GsonUtil.toJson(book));
         books = bookDao.listar(false);
         messageService.addFlash(new FacesMessage(FacesMessage.SEVERITY_INFO, "livro salvo", ""));
         clearObjects();
@@ -99,5 +98,17 @@ public class BookBean implements Serializable {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public Calendar getData() {
+        return data;
+    }
+
+    public void setData(Calendar data) {
+        this.data = data;
+    }
+
+    public void teste() {
+        System.out.println("teste");
     }
 }
