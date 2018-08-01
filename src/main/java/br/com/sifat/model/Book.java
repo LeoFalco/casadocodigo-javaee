@@ -6,8 +6,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
+@Table(name = "book")
 public class Book {
 
     private Long id;
@@ -25,6 +27,10 @@ public class Book {
         this.numPaginas = 0;
         this.preco = BigDecimal.ZERO;
         this.autores = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2019, Calendar.APRIL, 8);
+        this.dataLancamento = calendar;
     }
 
     @Id
@@ -38,7 +44,7 @@ public class Book {
     }
 
     @Column(nullable = false, columnDefinition = "varchar(100)", length = 100)
-    //@NotBlank
+    @NotNull
     public String getTitulo() {
         return titulo;
     }
@@ -48,7 +54,7 @@ public class Book {
     }
 
     @Column(nullable = false, columnDefinition = "varchar(250)", length = 250)
-    //@NotBlank
+    @NotNull
     public String getDescricao() {
         return descricao;
     }
@@ -92,12 +98,36 @@ public class Book {
 
     @ManyToMany(targetEntity = Autor.class, fetch = FetchType.EAGER)
     @Column(nullable = false)
-    //@NotBlank
+    @JoinTable(name = "book_autor",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "autor_id", referencedColumnName = "id")
+    )
+
+    @NotNull
     public List<Autor> getAutores() {
         return autores;
     }
 
     public void setAutores(List<Autor> autores) {
         this.autores = autores;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id) &&
+                Objects.equals(titulo, book.titulo) &&
+                Objects.equals(descricao, book.descricao) &&
+                Objects.equals(numPaginas, book.numPaginas) &&
+                Objects.equals(preco, book.preco) &&
+                Objects.equals(dataLancamento, book.dataLancamento) &&
+                Objects.equals(autores, book.autores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, titulo, descricao, numPaginas, preco, dataLancamento, autores);
     }
 }

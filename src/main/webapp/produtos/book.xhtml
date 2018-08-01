@@ -6,28 +6,36 @@
 <h:body>
     <h:form prependId="false">
         <div>
-            <h:outputLabel>Titulo</h:outputLabel>
-            <h:inputText id="titulo" value="#{bookBean.book.titulo}"/>
+            <h:outputLabel for="titulo">Titulo</h:outputLabel>
+            <h:inputText id="titulo" value="#{bookBean.book.titulo}" pt:type="text"/>
             <h:message for="titulo"/>
         </div>
         <div>
             <h:outputLabel>Descrição</h:outputLabel>
-            <h:inputTextarea id="descricao" cols="20" rows="10" value="#{bookBean.book.descricao}"/>
+            <h:inputTextarea id="descricao"
+                             cols="20"
+                             rows="10"
+                             pt:type="textarea"
+                             value="#{bookBean.book.descricao}"/>
             <h:message for="descricao"/>
         </div>
         <div>
             <h:outputLabel>Autores</h:outputLabel>
-            <h:selectManyListbox value="#{bookBean.idAutoresSelecionados}"
-                                 id="autores">
+            <h:selectManyListbox value="#{bookBean.book.autores}"
+                                 id="autores"
+                                 converter="autorConverter">
                 <f:selectItems value="#{bookBean.autores}"
                                var="author"
-                               itemLabel="#{author.name}" itemValue="#{author}"/>
+                               itemLabel="#{author.nome}"
+                               itemValue="#{author}"/>
             </h:selectManyListbox>
         </div>
         <div>
             <h:outputLabel>Número de páginas</h:outputLabel>
-            <h:inputText id="num-paginas" value="#{bookBean.book.numPaginas}"
-                         converter="javax.faces.Integer" pt:type="number"/>
+            <h:inputText id="num-paginas"
+                         value="#{bookBean.book.numPaginas}"
+                         converter="javax.faces.Integer"
+                         pt:type="number"/>
             <h:message for="num-paginas"/>
         </div>
         <div>
@@ -35,15 +43,19 @@
             <h:inputText id="preco" value="#{bookBean.book.preco}" pt:type="number"/>
             <h:message for="preco"/>
         </div>
+        <!--
         <div>
             <h:outputLabel for="data-lancamento">Data de Lançamento</h:outputLabel>
-            <h:inputText id="data-lancamento" value="#{bookBean.book.dataLancamento}" pt:type="date">
-                <f:convertDateTime pattern="dddd-MM-yy"/>
+            <h:inputText id="data-lancamento"
+                         value="#{bookBean.book.dataLancamento}"
+                         converter="calendarConverter">
             </h:inputText>
             <h:message for="preco"/>
         </div>
-
-        <h:commandButton value="Gravar 2" ajax="true" process="@form" update="data-table"
+        -->
+        <h:commandButton value="Gravar 2" ajax="true"
+                         process="@form"
+                         update="data-table"
                          actionListener="#{bookBean.save}"/>
         <p:dataTable var="book" id="data-table" value="#{bookBean.books}">
             <p:column headerText="Id">

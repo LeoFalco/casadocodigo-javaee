@@ -7,11 +7,14 @@ import javax.faces.convert.DateTimeConverter;
 import javax.faces.convert.FacesConverter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@FacesConverter
-public class CalendarHtml5Converter implements Converter {
+@FacesConverter(forClass = Calendar.class)
+public class CalendarConverter implements Converter {
 
     private static DateTimeConverter dateTimeConverter = new DateTimeConverter();
+    private static Logger logger = Logger.getLogger(CalendarConverter.class.getName());
 
     static {
         dateTimeConverter.setPattern("dd-MM-yyy");
@@ -26,6 +29,7 @@ public class CalendarHtml5Converter implements Converter {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
+        logger.log(Level.INFO, "Recuperando objeto " + calendar);
         return calendar;
     }
 
@@ -35,6 +39,9 @@ public class CalendarHtml5Converter implements Converter {
         if (value == null) return null;
 
         Calendar calendar = (Calendar) value;
-        return dateTimeConverter.getAsString(context, component, calendar.getTime());
+
+        String asString = dateTimeConverter.getAsString(context, component, calendar.getTime());
+        logger.log(Level.INFO, "Serializando objeto " + asString);
+        return asString;
     }
 }

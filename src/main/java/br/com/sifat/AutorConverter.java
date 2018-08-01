@@ -23,8 +23,8 @@ public class AutorConverter implements Converter {
             Autor autor = (Autor) obj;
             if (autor.getId() != null) {
                 uiComponent.getAttributes().put(autor.getId().toString(), autor);
-                if (autor.getName() != null && !autor.getName().equals("")) {
-                    return autor.getName();
+                if (autor.getNome() != null && !autor.getNome().equals("")) {
+                    return autor.getNome();
                 }
             }
         }

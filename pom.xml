@@ -8,6 +8,20 @@
     <packaging>war</packaging>
     <build>
         <finalName>br.com.sifat.casadocodigo</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.2.2.Final</version>
+                <configuration>
+                    <jbossHome>/home/leonardo/aplication-server/wildfly-13</jbossHome>
+                    <hostname>localhost</hostname>
+                    <port>9990</port>
+                    <username>leo</username>
+                    <password>sft6033</password>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -58,19 +72,11 @@
             <artifactId>primefaces</artifactId>
             <version>6.2</version>
         </dependency>
-<<<<<<< HEAD
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.10</version>
-        </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.0.Final</version>
         </dependency>
-=======
->>>>>>> .
     </dependencies>
     <dependencyManagement>
         <dependencies>

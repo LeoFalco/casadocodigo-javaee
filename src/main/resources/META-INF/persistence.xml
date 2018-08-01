@@ -7,9 +7,8 @@
         <description>Dev persistence unit</description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/casadocodigoDS</jta-data-source>
-
         <class>br.com.sifat.model.Book</class>
-
+        <class>br.com.sifat.model.Autor</class>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="false"/>

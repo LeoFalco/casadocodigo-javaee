@@ -55,15 +55,10 @@ public class BookBean implements Serializable {
     }
 
     public void save() {
-        preparaBook();
         System.out.println("lupalinda");
         book = bookDao.atualizar(book);
-<<<<<<< HEAD
         logger.log(Level.INFO, GsonUtil.toJson(book));
-        books = bookDao.listar();
-=======
         books = bookDao.listar(false);
->>>>>>> .
         messageService.addFlash(new FacesMessage(FacesMessage.SEVERITY_INFO, "livro salvo", ""));
         clearObjects();
     }
@@ -73,13 +68,6 @@ public class BookBean implements Serializable {
         book = new Book();
     }
 
-    private void preparaBook() {
-        List<Autor> collect = autores.stream()
-                .filter(autor -> idAutoresSelecionados.contains(autor.getId()))
-                .collect(Collectors.toList());
-
-        this.book.setAutores(collect);
-    }
 
     public Book getBook() {
         return book;
