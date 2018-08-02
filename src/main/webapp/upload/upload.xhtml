@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+    <title>Upload</title>
+</h:head>
+<h:body>
+    <h:form enctype="multipart/form-data">
+        <p:outputLabel value="Descrição" for="descricao"/>
+        <p:inputText id="descricao" value="#{arquivoBean.arquivo.descricao}"/>
+        <p:message for="descricao"/>
+
+        <p:outputLabel value="Arquivo" for="arquivo"/>
+        <p:fileUpload value="#{arquivoBean.file}" id="arquivo" mode="simple" skinSimple="true"/>
+        <p:message for="arquivo"/>
+
+        <p:commandButton value="Submit" ajax="false" actionListener="#{arquivoBean.upload}"/>
+    </h:form>
+
+</h:body>
+</html>

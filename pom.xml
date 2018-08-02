@@ -14,8 +14,8 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.2.2.Final</version>
                 <configuration>
-                    <!-- <jbossHome>/home/leonardo/aplication-server/wildfly-13</jbossHome> -->
-                    <jbossHome>C:/wildfly-13.0.0.Final</jbossHome>
+                    <jbossHome>/home/leonardo/aplication-server/wildfly-13</jbossHome>
+                    <!--<jbossHome>C:/wildfly-13.0.0.Final</jbossHome>-->
                     <hostname>localhost</hostname>
                     <port>9990</port>
                     <username>leo</username>
